@@ -5,7 +5,9 @@
  */
 package telas;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import obj.ObjEstoque;
 
 /**
  *
@@ -33,18 +35,18 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbtabelaID = new javax.swing.JTable();
-        btnInserir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        txtCor = new javax.swing.JTextField();
-        txtCodigo = new javax.swing.JTextField();
+        txtnome = new javax.swing.JTextField();
+        txtcor = new javax.swing.JTextField();
+        txtcodigo = new javax.swing.JTextField();
         btnApagar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtDatadeVencimento = new javax.swing.JTextField();
+        txtdata_de_vencimento = new javax.swing.JFormattedTextField();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -65,10 +67,10 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tbtabelaID);
 
-        btnInserir.setText("Inserir");
-        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInserirActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
@@ -81,11 +83,13 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Código:");
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
+        txtnome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
+                txtnomeActionPerformed(evt);
             }
         });
+
+        txtcodigo.setText("codigo sera gerado automaticamente");
 
         btnApagar.setText("Apagar");
         btnApagar.addActionListener(new java.awt.event.ActionListener() {
@@ -99,11 +103,11 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Data de Vencimento:");
 
-        txtDatadeVencimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDatadeVencimentoActionPerformed(evt);
-            }
-        });
+        try {
+            txtdata_de_vencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,7 +118,7 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,15 +126,15 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel3))
                                 .addGap(16, 16, 16)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNome)
-                                    .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtnome)
+                                    .addComponent(txtcor, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
-                                .addComponent(btnInserir)
+                                .addComponent(btnSalvar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,8 +144,8 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDatadeVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(txtdata_de_vencimento)))
+                        .addGap(0, 133, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,22 +156,22 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(txtDatadeVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInserir)
+                    .addComponent(jLabel7)
+                    .addComponent(txtdata_de_vencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
                     .addComponent(jLabel6)
                     .addComponent(btnApagar)
                     .addComponent(jLabel5))
@@ -179,29 +183,47 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        String nome = txtNome.getText();
-        String cor = txtCor.getText();
-        String codigo = txtCodigo.getText();
-        String DatadeVencimento = txtDatadeVencimento.getText();
+        String nome = txtnome.getText();
+        String cor = txtcor.getText();
+        
+       
+         String data_de_vencimento = txtdata_de_vencimento.getText();
 
-        DefaultTableModel val = (DefaultTableModel) tbtabelaID.getModel();
-        val.addRow(new String[]{nome,cor,DatadeVencimento});
+        //se o nome for vazio ou get codigo for 0(selecione..)
+//se o espaço não for vazio vai entrar no if e vai executar as linhas de baixo se for vazio cai no else e não deixa salvar no banco de dados.
+        if (!nome.isEmpty() && !cor.isEmpty() ) {
+//criando um objeto cidade
+            ObjEstoque est = new ObjEstoque();
+            est.setNome(txtnome.getText());
 
-        txtNome.setText("");
-        txtCor.setText("");
-        txtCodigo.setText("");
-        txtDatadeVencimento.setText("");
+             = preco.replace(",", ".");
+            double p = Double.valueOf(preco);
+            est.setPreco(p);
 
+            quantidade = quantidade.replace(",", ".");
+            double q = Double.valueOf(quantidade);
+            pro.setQuantidade(q);
 
-        txtNome.requestFocus();
+            pro.setPerecivel(rbPerecivel.isSelected());
 
-    }//GEN-LAST:event_btnInserirActionPerformed
+            pro.setCategoria(categoria);
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+            ProdutoDAO.inserir(pro);
+
+            limpar();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios!");
+
+        }
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void txtnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
+    }//GEN-LAST:event_txtnomeActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
 
@@ -209,14 +231,10 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnApagarActionPerformed
 
-    private void txtDatadeVencimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDatadeVencimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDatadeVencimentoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApagar;
-    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -227,9 +245,9 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbtabelaID;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtCor;
-    private javax.swing.JTextField txtDatadeVencimento;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtcodigo;
+    private javax.swing.JTextField txtcor;
+    private javax.swing.JFormattedTextField txtdata_de_vencimento;
+    private javax.swing.JTextField txtnome;
     // End of variables declaration//GEN-END:variables
 }
