@@ -9,112 +9,82 @@ import obj.ObjEstoque;
 
 
 public class EstoqueDao {
-     public static void inserir(ObjEstoque cli) {
-        String sql = "INSERT INTO estoque "
-                + " ( nome, cor, codigo, data_de_vencimento ) "
-                + "VALUES( "
-                + " '" + cli.getNome()   + "' , "
-                + " '" + cli.getCor()    + "' , "
-                + " '" + cli.getCodigo() + "' , "
-                + " " + cli.getData_de_vencimento() + " "
-                + " );";        
-        Conexao.executar(sql);
-    }
 
-    public static void editar(ObjEstoque cli) {
-        String sql = "UPDATE clientes SET "
-                + " nome = '" + cli.getNome() + "' , "
-                + " cor = '" + cli.getCor() + "' , "
-                + " codigo = '" + cli.getCodigo() + "' , "
-                + " data_de_vencimento = '" + cli.getData_de_vencimento() + "' , "
-                + "WHERE codigo = " + cli.getNome();        
-        Conexao.executar(sql);
-    }    
-
-    public static void excluir(ObjEstoque cli) {
-        String sql = "DELETE FROM estoque"
-                + "WHERE codigo = " + cli.getNome();        
-        Conexao.executar(sql);
-    }
+    /**
+     *
+     * @param est
+     */
+    public static void inserir (ObjEstoque est){
+       String sql = "INSERT INTO estoque "
+               + " ( nome, cor, codigo, data_de_vencimento ) "
+               + "VALUES( "
+               + " '" + est.getNome()                 + "' , " 
+               + " " + est.getCor()                   + " , " 
+               + " " + est.getCodigo()                + " , " 
+               + " " + est.getData_de_vencimento()    + "  " 
+               + " );";   
+       Conexao.executar(sql);
+   }
+     
+     
+     
+      public static void editar (ObjEstoque est){
+       String sql = "UPDATE estoque SET "
+        
+               + " nome = '" + est.getNome()                         + "' , " 
+               + " preco = " + est.getCor()                        + " , " 
+               + " quantidade = " + est.getCodigo()              + " , " 
+               + " perecivel = " + est.Data_de_vencimento()                 + " , " 
+               + " codCategoria = " + pro.getCategoria().getCodigo() + " " 
+               + "WHERE codigo = " + est.getCodigo();   
+       Conexao.executar(sql);
+   }      
+       public static void excluir (ObjProduto pro){
+       String sql = "DELETE FROM produtos"
+               + "WHERE codigo = " + pro.getCodigo();   
+       Conexao.executar(sql);
+}
+       
+       
+       public static List<ObjProduto> getProdutos(){
+    List<ObjProduto> lista = new ArrayList<>();
+   
+    String sql = "SELECT c.codigo, d.codigo, c.nome, d.nome , "
+            + " c.preco, c.quantidade, c.perecivel"
+            + " FROM produtos c "
+            + " INNER JOIN cidades d ON c.codCategoria = d.codigo "
+            + " ORDER BY c.nome";
     
-    public static List<ObjEstoque> getClientes() {
-        List<ObjEstoque> lista = new ArrayList<>();
-        //consulta em mais de uma tabela ao mesmo tempo pra buscar o nome da cidade pelo codCidade.
-        //a primeira tabela declarada após o from(na consulta) é a da esquerda e a segunda é a da direita
-        
-        String sql = "SELECT c.nome, c.cor, c.codigo, c.data_de_vencimento , "
-                + " c.nome, c.cor, c.codigo, c.data_de_vencimento  "
-                + " FROM estoque c "
-                + " WHERE c.tipo = '' "
-                + " ORDER BY c.nome";
 
-//ordenado pelo nome(ordem alfabetica)
-        //inner join usado para consultas em mais de uma tabela buscando a intersecção das tabelas.
-        ResultSet rs = Conexao.consultar(sql);
-        if (rs != null) {
-            //o result set(rs) vai conter a "tabela" com as informações na ordem da consulta
-            try {
-                while (rs.next()) {
-                    //o result set começa o array em 1
-                    ObjEstoque cli = new ObjEstoque();
-                    cli.setNome(rs.getString(3));
-                    cli.setCor(rs.getString(5));
-                    cli.setCodigo(rs.getString(6));
-                    cli.setData_de_vencimento(rs.getString(7));
-
-                    //criar um objeto cidade
-                    ObjEstoque cid = new ObjEstoque();
-                    cid.setNome(rs.getString(2));
-                    cid.setCor(rs.getString(3));
-                    cid.setCodigo(rs.getString(4));
-                    cid.setData_de_vencimento(rs.getString(5));
-                   
-
-                    //adicionar o cliente na lista:
-                    lista.add(cli);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.toString());
-                
-            }
-        }
-        return lista;
-        
-    }
-
-    public static Object getClienteByCodigo(int codigo) {
-        Object cliente = null;
-        
-        String sql = "SELECT c.nome, c.nome, c.cor, c.cor , "
-                + " c.codigo, c.data_de_vencimento "
-                + " FROM clientes c "
-                + " INNER JOIN cidades d ON c.codCidade = d.codigo "
-                + " WHERE c.codigo = " + codigo
-                + " ORDER BY c.nome ";        
-        ResultSet rs = Conexao.consultar(sql);
-        
+           ResultSet rs = Conexao.consultar(sql);
+    if (rs != null){
+       
         try {
-            rs.first();
-            ObjEstoque cidade = new ObjEstoque();
-            cidade.setCodigo(rs.getString(2));
-            cidade.setNome(rs.getString(4));
-            
-            String tipo = rs.getString(7);            
-            if ( tipo.equals("") ) {
-                ObjEstoque cli = new ObjEstoque();
-                cli.setCodigo(rs.getString(1));
-                cli.setNome(rs.getString(3));
-                cli.setCor(rs.getString(5));
-                cli.setCodigo(rs.getString(6));
+            while (rs.next()) {       
                
-                cli.setCidade(cidade);
+               ObjProduto pro = new ObjProduto();
+               pro.setCodigo(rs.getInt(1));
+               pro.setNome(rs.getString(3));
+               pro.setPreco(rs.getDouble(5));
+               pro.setQuantidade(rs.getDouble(6));
+               pro.setPerecivel(rs.getBoolean(7));
+               
+               
+               
+               ObjCategoria cat = new ObjCategoria();
+               cat.setCodigo(rs.getInt(2));
+               cat.setNome(rs.getString(4));
+               
+               pro.setCategoria(cat);
+               
+               lista.add(pro);
             }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.toString());
+            
         }
-        
-        return cliente;
-        
     }
+    return lista;
+    
+}
 }
