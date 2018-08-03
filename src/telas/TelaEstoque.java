@@ -5,6 +5,7 @@
  */
 package telas;
 
+import dao.EstoqueDao;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import obj.ObjEstoque;
@@ -197,22 +198,12 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
 //criando um objeto cidade
             ObjEstoque est = new ObjEstoque();
             est.setNome(txtnome.getText());
+            est.setCor(txtcor.getText());
+           
 
-             = preco.replace(",", ".");
-            double p = Double.valueOf(preco);
-            est.setPreco(p);
+            EstoqueDao.inserir(est);
 
-            quantidade = quantidade.replace(",", ".");
-            double q = Double.valueOf(quantidade);
-            pro.setQuantidade(q);
-
-            pro.setPerecivel(rbPerecivel.isSelected());
-
-            pro.setCategoria(categoria);
-
-            ProdutoDAO.inserir(pro);
-
-            limpar();
+            
 
         } else {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios!");

@@ -79,6 +79,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         IMSair.setText("Sair");
+        IMSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IMSairActionPerformed(evt);
+            }
+        });
         IMArquivo.add(IMSair);
 
         jMenuBar1.add(IMArquivo);
@@ -219,6 +224,10 @@ public class principal extends javax.swing.JFrame {
         jDesktopPane2.add( obj );
         obj.setVisible( true );
     }//GEN-LAST:event_IMContatosActionPerformed
+
+    private void IMSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IMSairActionPerformed
+        principal.this.dispose();
+    }//GEN-LAST:event_IMSairActionPerformed
 
     /**
      * @param args the command line arguments

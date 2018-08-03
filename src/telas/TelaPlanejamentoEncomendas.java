@@ -5,7 +5,9 @@
  */
 package telas;
 
+import dao.Itens_encomendaDao;
 import javax.swing.table.DefaultTableModel;
+import obj.ObjEncomenda;
 
 /**
  *
@@ -106,18 +108,20 @@ public class TelaPlanejamentoEncomendas extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnInserir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
                                 .addComponent(btnApagar)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtDatadeVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDatadeVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(114, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,11 +137,11 @@ public class TelaPlanejamentoEncomendas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtDatadeVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDatadeVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnInserir)
@@ -146,7 +150,7 @@ public class TelaPlanejamentoEncomendas extends javax.swing.JInternalFrame {
                         .addComponent(btnApagar)
                         .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -155,20 +159,39 @@ public class TelaPlanejamentoEncomendas extends javax.swing.JInternalFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         
-        String nome = txtNome.getText().trim();
-        String cor = txtCor.getText().trim();
-        String DatadeVencimento = txtDatadeVencimento.getText().trim();
+ String nome = txtNome.getText();
+        String cor = txtCor.getText();
         
+       
+         String data_de_vencimento = txtDatadeVencimento.getText();
+
+        //se o nome for vazio ou get codigo for 0(selecione..)
+//se o espaço não for vazio vai entrar no if e vai executar as linhas de baixo se for vazio cai no else e não deixa salvar no banco de dados.
+        if (!nome.isEmpty() && !cor.isEmpty() ) {
+//criando um objeto cidade
+            ObjEncomenda est = new ObjEncomenda();
+            est.setNome(txtNome.getText());
+            est.setCor(txtCor.getText());
+           
+
+            Itens_encomendaDao.inserir(est);
+
+        String Nome = txtNome.getText().trim();
+        String Cor = txtCor.getText().trim();
+
+        String DatadeVencimento = txtDatadeVencimento.getText().trim();
+
         DefaultTableModel val = (DefaultTableModel) tbTabela.getModel();
         val.addRow(new String[]{nome,cor,DatadeVencimento});
 
         txtNome.setText("");
         txtCor.setText("");
-        txtDatadeVencimento.setText("");
-       
         
+        txtDatadeVencimento.setText("");
+
+
         txtNome.requestFocus();
-     
+        }
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed

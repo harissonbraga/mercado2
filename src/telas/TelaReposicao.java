@@ -5,7 +5,10 @@
  */
 package telas;
 
+
+import dao.ReposicaoDao;
 import javax.swing.table.DefaultTableModel;
+import obj.ObjReposicao;
 
 /**
  *
@@ -33,7 +36,7 @@ public class TelaReposicao extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbtabelaID = new javax.swing.JTable();
-        btnInserir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -65,10 +68,10 @@ public class TelaReposicao extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tbtabelaID);
 
-        btnInserir.setText("Inserir");
-        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInserirActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
@@ -130,7 +133,7 @@ public class TelaReposicao extends javax.swing.JInternalFrame {
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
-                                .addComponent(btnInserir)
+                                .addComponent(btnSalvar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -167,7 +170,7 @@ public class TelaReposicao extends javax.swing.JInternalFrame {
                     .addComponent(txtDatadeVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInserir)
+                    .addComponent(btnSalvar)
                     .addComponent(jLabel6)
                     .addComponent(btnApagar)
                     .addComponent(jLabel5))
@@ -179,10 +182,26 @@ public class TelaReposicao extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+    String nome = txtNome.getText();
+        String cor = txtCor.getText();
+        
+       
+         String data_de_vencimento = txtDatadeVencimento.getText();
 
-        String nome = txtNome.getText().trim();
-        String cor = txtCor.getText().trim();
+        //se o nome for vazio ou get codigo for 0(selecione..)
+//se o espaço não for vazio vai entrar no if e vai executar as linhas de baixo se for vazio cai no else e não deixa salvar no banco de dados.
+        if (!nome.isEmpty() && !cor.isEmpty() ) {
+//criando um objeto cidade
+            ObjReposicao est = new ObjReposicao();
+            est.setNome(txtNome.getText());
+            est.setCor(txtCor.getText());
+           
+
+            ReposicaoDao.inserir(est);
+
+        String Nome = txtNome.getText().trim();
+        String Cor = txtCor.getText().trim();
         String codigo = txtCodigo.getText().trim();
         String DatadeVencimento = txtDatadeVencimento.getText().trim();
 
@@ -196,12 +215,8 @@ public class TelaReposicao extends javax.swing.JInternalFrame {
 
 
         txtNome.requestFocus();
-
-    }//GEN-LAST:event_btnInserirActionPerformed
-
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
 
@@ -213,10 +228,14 @@ public class TelaReposicao extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDatadeVencimentoActionPerformed
 
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApagar;
-    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
