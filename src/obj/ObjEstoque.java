@@ -14,7 +14,7 @@ public class ObjEstoque {
     public ObjEstoque() {
     }
 
-    public ObjEstoque(String nome, String cor, String codigo, String data_de_vencimento) {
+    public ObjEstoque(String nome, String cor, int codigo, String data_de_vencimento) {
         this.nome = nome;
         this.cor = cor;
         this.codigo = codigo;
@@ -52,14 +52,14 @@ public class ObjEstoque {
     /**
      * @return the codigo
      */
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
     /**
      * @param codigo the codigo to set
      */
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -78,7 +78,7 @@ public class ObjEstoque {
     }
     private String nome;
     private String cor;
-    private String codigo;
+    private int codigo;
     private String data_de_vencimento;  
 
     

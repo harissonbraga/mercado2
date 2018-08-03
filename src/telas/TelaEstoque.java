@@ -181,10 +181,10 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
 
-        String nome = txtNome.getText().trim();
-        String cor = txtCor.getText().trim();
-        String codigo = txtCodigo.getText().trim();
-        String DatadeVencimento = txtDatadeVencimento.getText().trim();
+        String nome = txtNome.getText();
+        String cor = txtCor.getText();
+        String codigo = txtCodigo.getText();
+        String DatadeVencimento = txtDatadeVencimento.getText();
 
         DefaultTableModel val = (DefaultTableModel) tbtabelaID.getModel();
         val.addRow(new String[]{nome,cor,DatadeVencimento});

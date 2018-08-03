@@ -34,27 +34,24 @@ public class EstoqueDao {
                + " nome = '" + est.getNome()                         + "' , " 
                + " preco = " + est.getCor()                        + " , " 
                + " quantidade = " + est.getCodigo()              + " , " 
-               + " perecivel = " + est.Data_de_vencimento()                 + " , " 
-               + " codCategoria = " + pro.getCategoria().getCodigo() + " " 
+               + " perecivel = " + est.getData_de_vencimento()                 + " , " 
+
                + "WHERE codigo = " + est.getCodigo();   
        Conexao.executar(sql);
    }      
-       public static void excluir (ObjProduto pro){
-       String sql = "DELETE FROM produtos"
-               + "WHERE codigo = " + pro.getCodigo();   
+       public static void excluir (ObjEstoque est){
+       String sql = "DELETE FROM estoque"
+               + "WHERE codigo = " + est.getCodigo();   
        Conexao.executar(sql);
 }
        
        
-       public static List<ObjProduto> getProdutos(){
-    List<ObjProduto> lista = new ArrayList<>();
+       public static List<ObjEstoque> getEstoques(){
+    List<ObjEstoque> lista = new ArrayList<>();
    
-    String sql = "SELECT c.codigo, d.codigo, c.nome, d.nome , "
-            + " c.preco, c.quantidade, c.perecivel"
-            + " FROM produtos c "
-            + " INNER JOIN cidades d ON c.codCategoria = d.codigo "
-            + " ORDER BY c.nome";
-    
+    String sql = "SELECT nome, cor, codigo, data_de_vencimento FROM TABLE estoque";
+  
+           
 
            ResultSet rs = Conexao.consultar(sql);
     if (rs != null){
@@ -62,22 +59,18 @@ public class EstoqueDao {
         try {
             while (rs.next()) {       
                
-               ObjProduto pro = new ObjProduto();
-               pro.setCodigo(rs.getInt(1));
-               pro.setNome(rs.getString(3));
-               pro.setPreco(rs.getDouble(5));
-               pro.setQuantidade(rs.getDouble(6));
-               pro.setPerecivel(rs.getBoolean(7));
+               ObjEstoque est = new ObjEstoque();
+               est.setNome(rs.getString(1));
+               est.setCor(rs.getString(3));
+               est.setCodigo(rs.getInt(5));
+               est.setData_de_vencimento(rs.getString(6));
                
                
                
-               ObjCategoria cat = new ObjCategoria();
-               cat.setCodigo(rs.getInt(2));
-               cat.setNome(rs.getString(4));
                
-               pro.setCategoria(cat);
                
-               lista.add(pro);
+               
+               lista.add(est);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.toString());
