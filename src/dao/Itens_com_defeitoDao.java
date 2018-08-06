@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import obj.ObjEstoque;
 
-/**
- *
- * @author 181710062
- */
+
 public class Itens_com_defeitoDao {
     public static void inserir( ObjEstoque est){
         String sql = "INSERT INTO estoque "
