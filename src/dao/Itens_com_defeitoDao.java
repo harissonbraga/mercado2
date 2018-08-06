@@ -28,7 +28,7 @@ public class Itens_com_defeitoDao {
 
     public static void excluir(ObjEstoque est) {
         String sql = "DELETE FROM estoque "
-                + " WHERE codigo = " + est.getCodigo();
+                +  " WHERE codigo = " + est.getCodigo();
         Conexao.executar(sql);
     }
 }
